@@ -17,4 +17,10 @@ public struct VideoResponse: Decodable, Sendable {
     public let list: [Video]
     public let hasMore: Bool
     public let page: Int
+    
+    public init(list: [Video], hasMore: Bool, page: Int) {
+        self.list = list
+        self.hasMore = hasMore
+        self.page = page
+    }
 }

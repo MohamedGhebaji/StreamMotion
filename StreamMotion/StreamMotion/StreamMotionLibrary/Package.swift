@@ -13,16 +13,52 @@ let package = Package(
         .library(name: "VideoPlayerFeature", targets: ["VideoPlayerFeature"]),
         .library(name: "Utils", targets: ["Utils"]),
         .library(name: "UI", targets: ["UI"]),
+        .library(name: "TestUtils", targets: ["TestUtils"]),
     ],
     targets: [
-        .target(name: "Data", dependencies: ["Domain", "Utils"]),
-        .testTarget(name: "DataTests", dependencies: ["Data"]),
-        .target(name: "Domain"),
-        .testTarget(name: "DomainTests", dependencies: ["Domain"]),
-        .target(name: "VideoListFeature", dependencies: ["Domain", "Utils", "UI", "VideoPlayerFeature"], path: "Sources/Features/VideoListFeature"),
-        .testTarget(name: "VideoListFeatureTests", dependencies: ["VideoListFeature"], path: "Tests/Features/VideoListFeatureTests"),
-        .target(name: "VideoPlayerFeature", dependencies: ["Utils"], path: "Sources/Features/VideoPlayerFeature"),
-        .target(name: "Utils"),
-        .target(name: "UI"),
+        .target(
+            name: "Data",
+            dependencies: [
+                "Domain",
+                "Utils"
+            ]
+        ),
+        .target(
+            name: "Domain"
+        ),
+        .target(
+            name: "VideoListFeature",
+            dependencies: [
+                "Domain",
+                "Utils",
+                "UI",
+                "VideoPlayerFeature"
+            ],
+            path: "Sources/Features/VideoListFeature"
+        ),
+        .testTarget(
+            name: "VideoListFeatureTests",
+            dependencies: [
+                "VideoListFeature",
+                "Domain",
+                "TestUtils"
+            ],
+            path: "Tests/Features/VideoListFeatureTests"
+        ),
+        .target(
+            name: "VideoPlayerFeature",
+            dependencies: ["Utils"],
+            path: "Sources/Features/VideoPlayerFeature"
+        ),
+        .target(
+            name: "Utils"
+        ),
+        .target(
+            name: "UI"
+        ),
+        .target(
+            name: "TestUtils",
+            dependencies: ["Domain"]
+        ),
     ]
 )

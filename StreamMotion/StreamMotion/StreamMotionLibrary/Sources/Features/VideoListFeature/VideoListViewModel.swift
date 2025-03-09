@@ -16,10 +16,11 @@ public class VideoListViewModel: ObservableObject {
     
     @Published var rows: [VideoRowState] = []
     @Published var canLoadMore = false
-
+    @Published var isFailed = false
+    
     // MARK: - Private Properties
     
-    private let fetchVideosUseCase: FetchVideosUseCase
+    var fetchVideosUseCase: FetchVideosUseCase
     private let minutesAgoUseCase: MinutesAgoUseCase
     private var isPaginating = false
     private var isLoading = false
@@ -35,7 +36,7 @@ public class VideoListViewModel: ObservableObject {
     func fetchVideos() async {
         guard !isLoading else { return }
         isLoading = true
-
+        isFailed = false
         do {
             let response = try await fetchVideosUseCase.execute(page: currentPage + 1)
             let videoRowStates = response.list.map {
@@ -51,7 +52,8 @@ public class VideoListViewModel: ObservableObject {
             currentPage = response.page
             canLoadMore = response.hasMore
         } catch {
-            print("Error fetching videos: \(error)")
+            canLoadMore = false
+            isFailed = true
         }
         isLoading = false
     }

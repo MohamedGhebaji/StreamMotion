@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "2C4D58B1-045E-4F1D-B413-B69D7860F400",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "VideoListFeatureTests",
+        "name" : "VideoListFeatureTests"
+      }
+    }
+  ],
+  "version" : 1
+}

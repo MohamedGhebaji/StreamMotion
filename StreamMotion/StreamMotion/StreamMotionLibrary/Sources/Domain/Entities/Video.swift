@@ -20,4 +20,18 @@ public struct Video: Identifiable, Decodable, Sendable {
     public let description: String
     public let thumbnailUrl: String
     public let creationTime: TimeInterval
+    
+    public init(
+        id: String,
+        title: String,
+        description: String,
+        thumbnailUrl: String,
+        creationTime: TimeInterval
+    ) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.thumbnailUrl = thumbnailUrl
+        self.creationTime = creationTime
+    }
 }
