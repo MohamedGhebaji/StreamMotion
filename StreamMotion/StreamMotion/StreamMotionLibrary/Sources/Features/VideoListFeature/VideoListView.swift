@@ -13,48 +13,79 @@ import VideoPlayerFeature
 
 public struct VideoListView: View {
     
-    @StateObject private var viewModel: VideoListViewModel
+    @ObservedObject private var viewModel: VideoListViewModel
     @State private var isPresented = false
     
     public init(viewModel: VideoListViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+        self.viewModel = viewModel
     }
     
     public var body: some View {
         Group {
-            if viewModel.rows.isEmpty {
-                SpinnerView()
-                    .frame(width: 40, height: 40)
-            } else {
-                List {
-                    Group {
-                        ForEach(viewModel.rows) { row in
-                            VideoRowView(state: row)
-                                .onTapGesture {
-                                    isPresented.toggle()
-                                }
+            switch viewModel.state {
+                case .loading:
+                    SpinnerView()
+                        .frame(width: 40, height: 40)
+                case .success(let rows):
+                    List {
+                        Group {
+                            ForEach(rows) { row in
+                                VideoRowView(state: row)
+                                    .onTapGesture {
+                                        isPresented.toggle()
+                                    }
+                            }
+                            
+                            if viewModel.canLoadMore {
+                                SpinnerView()
+                                    .frame(width: 40, height: 40)
+                                    .frame(maxWidth: .infinity)
+                                    .task {
+                                        await viewModel.loadNextPage()
+                                    }
+                            }
                         }
-                        
-                        if viewModel.canLoadMore {
-                            SpinnerView()
-                                .frame(width: 40, height: 40)
-                                .frame(maxWidth: .infinity)
-                                .task {
-                                    await viewModel.loadNextPage()
-                                }
-                        }
+                        .listSectionSeparator(.hidden, edges: [.top, .bottom])
                     }
-                    .listSectionSeparator(.hidden, edges: [.top, .bottom])
-                }
-                .listStyle(.plain)
-                .fullScreenCover(isPresented: $isPresented) {
-                    VideoPlayerView()
-                }
+                    .listStyle(.plain)
+                    .fullScreenCover(isPresented: $isPresented) {
+                        VideoPlayerView()
+                    }
+                case .failure:
+                    failureView
             }
         }
         .navigationTitle("Dailymotion")
         .taskOnce {
             await viewModel.fetchVideos()
         }
+    }
+}
+
+// MARK: - Private functions
+
+private extension VideoListView {
+    
+    @ViewBuilder
+    var failureView: some View {
+        VStack {
+            Text("Une erreur est survenue. Merci de réessayer")
+                .font(.headline)
+            Button {
+                Task {
+                    await viewModel.fetchVideos()
+                }
+            } label: {
+                Text("Réessayer")
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+            }
+            .background {
+                RoundedRectangle(cornerRadius: 25)
+                    .fill(.black)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

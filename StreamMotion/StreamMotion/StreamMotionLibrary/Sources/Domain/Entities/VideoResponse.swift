@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct VideoResponse: Decodable, Sendable {
+public struct VideoResponse: Equatable, Decodable, Sendable {
     
     enum CodingKeys: String, CodingKey {
         case list, page

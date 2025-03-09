@@ -27,7 +27,6 @@ public struct SMApiClient: ApiClient {
         guard let url = URL(string: Constants.baseUrl + route.path) else {
             throw URLError(.badURL)
         }
-        print("*** url : \(url)")
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = route.httpMethod.rawValue

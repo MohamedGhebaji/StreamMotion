@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "3EF794CA-A49D-4DA2-B083-4F1C420F80AB",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "DomainTests",
+        "name" : "DomainTests"
+      }
+    }
+  ],
+  "version" : 1
+}

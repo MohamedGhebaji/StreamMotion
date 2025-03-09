@@ -12,19 +12,22 @@ import Domain
 @MainActor
 public class VideoListViewModel: ObservableObject {
     
+    enum State: Equatable {
+        case loading
+        case success([VideoRowState])
+        case failure
+    }
     // MARK: - Public Properties
     
-    @Published var rows: [VideoRowState] = []
+    @Published var state: State = .loading
     @Published var canLoadMore = false
-    @Published var isFailed = false
     
     // MARK: - Private Properties
     
     var fetchVideosUseCase: FetchVideosUseCase
     private let minutesAgoUseCase: MinutesAgoUseCase
-    private var isPaginating = false
-    private var isLoading = false
     private var currentPage: Int = 0
+    private var rows = [VideoRowState]()
     
     // MARK: - Init
 
@@ -34,9 +37,6 @@ public class VideoListViewModel: ObservableObject {
     }
     
     func fetchVideos() async {
-        guard !isLoading else { return }
-        isLoading = true
-        isFailed = false
         do {
             let response = try await fetchVideosUseCase.execute(page: currentPage + 1)
             let videoRowStates = response.list.map {
@@ -49,23 +49,19 @@ public class VideoListViewModel: ObservableObject {
                 )
             }
             rows.append(contentsOf: videoRowStates)
+            state = .success(rows)
             currentPage = response.page
             canLoadMore = response.hasMore
         } catch {
-            canLoadMore = false
-            isFailed = true
+            if rows.isEmpty {
+                state = .failure
+            }
         }
-        isLoading = false
     }
     
     @MainActor
     func loadNextPage() async {
-        guard !isPaginating,
-              canLoadMore
-        else { return }
-        
-        isPaginating = true
+        guard canLoadMore else { return }
         await fetchVideos()
-        isPaginating = false
     }
 }

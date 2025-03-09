@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "4183D105-33C5-45F4-A20B-53E1737471EB",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "DataTests",
+        "name" : "DataTests"
+      }
+    }
+  ],
+  "version" : 1
+}

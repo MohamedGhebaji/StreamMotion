@@ -7,7 +7,25 @@
 		<key>StreamMotion.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>4</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>EA6CC5B22D7C4789008A21DB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EA6CC5C32D7C478A008A21DB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EA6CC5CD2D7C478A008A21DB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

@@ -23,8 +23,22 @@ let package = Package(
                 "Utils"
             ]
         ),
+        .testTarget(
+            name: "DataTests",
+            dependencies: [
+                "Data",
+                "TestUtils"
+            ]
+        ),
         .target(
             name: "Domain"
+        ),
+        .testTarget(
+            name: "DomainTests",
+            dependencies: [
+                "Domain",
+                "TestUtils"
+            ]
         ),
         .target(
             name: "VideoListFeature",

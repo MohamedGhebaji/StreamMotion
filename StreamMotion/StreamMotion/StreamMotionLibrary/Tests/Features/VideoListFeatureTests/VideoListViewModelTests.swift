@@ -14,7 +14,7 @@ import TestUtils
 @MainActor
 final class VideoListViewModelTests: XCTestCase {
     
-    func testFetchVideos_Success() async {
+    func testFetchVideos_success() async {
         // GIVEN
         let mockVideos = [
             Video(id: "1", title: "Test Video", description: "Test Description", thumbnailUrl: "https://test.com/image.jpg", creationTime: 1711900200),
@@ -31,21 +31,15 @@ final class VideoListViewModelTests: XCTestCase {
         await viewModel.fetchVideos()
         
         // THEN
-        XCTAssertFalse(viewModel.rows.isEmpty)
-        XCTAssertEqual(viewModel.rows.count, mockVideos.count)
-        XCTAssertEqual(viewModel.rows[0].title, "Test Video")
-        XCTAssertEqual(viewModel.rows[0].description, "Test Description")
-        XCTAssertEqual(viewModel.rows[0].thumbnailUrl, "https://test.com/image.jpg")
-        XCTAssertEqual(viewModel.rows[0].timeAgo, "Il y a 5 minutes")
-        XCTAssertEqual(viewModel.rows[1].title, "Second Video")
-        XCTAssertEqual(viewModel.rows[1].description, "Another Description")
-        XCTAssertEqual(viewModel.rows[1].thumbnailUrl, "https://test.com/image2.jpg")
-        XCTAssertEqual(viewModel.rows[1].timeAgo, "Il y a 5 minutes")
+        let expectations: [VideoRowState] = [
+            .init(id: "1", thumbnailUrl: "https://test.com/image.jpg", title: "Test Video", description: "Test Description", timeAgo: "Il y a 5 minutes"),
+            .init(id: "2", thumbnailUrl: "https://test.com/image2.jpg", title: "Second Video", description: "Another Description", timeAgo: "Il y a 5 minutes")
+        ]
+        XCTAssertEqual(viewModel.state, .success(expectations))
         XCTAssertTrue(viewModel.canLoadMore)
-        XCTAssertFalse(viewModel.isFailed)
     }
     
-    func testFetchVideos_Failure() async {
+    func testFetchVideos_failure() async {
         // GIVEN
         let fetchVideosMock = FetchVideosUseCaseMock(stubType: .failure(URLError(.notConnectedToInternet)))
         let minutesAgoMock = MinutesAgoUseCaseMock(expectation: 5)
@@ -56,18 +50,17 @@ final class VideoListViewModelTests: XCTestCase {
         await viewModel.fetchVideos()
         
         // THEN
-        XCTAssertTrue(viewModel.rows.isEmpty)
+        XCTAssertEqual(viewModel.state, .failure)
         XCTAssertFalse(viewModel.canLoadMore)
-        XCTAssertTrue(viewModel.isFailed)
     }
     
-    func testPagination_Success() async {
+    func testPagination_success() async {
         // GIVEN
         let mockVideosPage1 = [
-            Video(id: "1", title: "Video 1", description: "Desc 1", thumbnailUrl: "url1", creationTime: 1711900200)
+            Video(id: "1", title: "Video 1", description: "Desc 1", thumbnailUrl: "https://test.com/image.jpg", creationTime: 1711900200)
         ]
         let mockVideosPage2 = [
-            Video(id: "2", title: "Video 2", description: "Desc 2", thumbnailUrl: "url2", creationTime: 1711900300)
+            Video(id: "2", title: "Video 2", description: "Desc 2", thumbnailUrl: "https://test.com/image2.jpg", creationTime: 1711900300)
         ]
         
         let fetchVideosMockPage1 = FetchVideosUseCaseMock(stubType: .success(VideoResponse(list: mockVideosPage1, hasMore: true, page: 1)))
@@ -78,22 +71,27 @@ final class VideoListViewModelTests: XCTestCase {
         let viewModel = VideoListViewModel(fetchVideosUseCase: fetchVideosMockPage1, minutesAgoUseCase: minutesAgoMock)
         
         // WHEN
+        let expectationsPage1: [VideoRowState] = [
+            .init(id: "1", thumbnailUrl: "https://test.com/image.jpg", title: "Video 1", description: "Desc 1", timeAgo: "Il y a 5 minutes")
+        ]
         await viewModel.fetchVideos()
-        XCTAssertEqual(viewModel.rows.count, 1)
+        XCTAssertEqual(viewModel.state, .success(expectationsPage1))
         XCTAssertTrue(viewModel.canLoadMore)
-        XCTAssertFalse(viewModel.isFailed)
         
         // WHEN
         viewModel.fetchVideosUseCase = fetchVideosMockPage2
         await viewModel.loadNextPage()
         
         // THEN
-        XCTAssertEqual(viewModel.rows.count, 2)
+        let expectationsPage2: [VideoRowState] = [
+            .init(id: "1", thumbnailUrl: "https://test.com/image.jpg", title: "Video 1", description: "Desc 1", timeAgo: "Il y a 5 minutes"),
+            .init(id: "2", thumbnailUrl: "https://test.com/image2.jpg", title: "Video 2", description: "Desc 2", timeAgo: "Il y a 5 minutes"),
+        ]
+        XCTAssertEqual(viewModel.state, .success(expectationsPage2))
         XCTAssertFalse(viewModel.canLoadMore)
-        XCTAssertFalse(viewModel.isFailed)
     }
     
-    func testPagination_Failure() async {
+    func testPagination_failure() async {
         // GIVEN
         let fetchVideosMock = FetchVideosUseCaseMock(stubType: .failure(URLError(.timedOut)))
         let minutesAgoMock = MinutesAgoUseCaseMock(expectation: 5)
@@ -105,8 +103,7 @@ final class VideoListViewModelTests: XCTestCase {
         await viewModel.loadNextPage()
         
         // THEN
-        XCTAssertTrue(viewModel.rows.isEmpty)
-        XCTAssertFalse(viewModel.canLoadMore)
-        XCTAssertTrue(viewModel.isFailed)
+        XCTAssertEqual(viewModel.state, .failure)
+        XCTAssertTrue(viewModel.canLoadMore)
     }
 }

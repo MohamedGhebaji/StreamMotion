@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Video: Identifiable, Decodable, Sendable {
+public struct Video: Equatable, Identifiable, Decodable, Sendable {
     
     enum CodingKeys: String, CodingKey {
         case id, title, description
