@@ -21,7 +21,7 @@ This project follows the **Clean Architecture** principles, divided into **three
 
 3. **Data Layer (Networking & Repository)**
    - `VideoRepository` → Fetches data from the API.
-   - `VideoService` → Handles API requests using `async/await`.
+   - `ApiClient` → Handles API requests using `async/await`.
    - `VideoResponse` & `Video` → Codable models for parsing API responses.
 
 ### **📝 Feature Dependencies**
@@ -44,9 +44,3 @@ This project includes **unit tests** to ensure reliability.
 ✅ **Model Parsing Test** → Ensures API response is correctly mapped.  
 ✅ **Use Case Tests** → Verifies fetching videos and handling API failures.  
 ✅ **ViewModel Tests** → Checks state updates, pagination, and error handling.
-
-Example test case for ViewModel:
-```swift
-func testFetchVideos_Success() async {
-    await testFetchVideos(succeeds: true)
-}

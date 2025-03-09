@@ -48,7 +48,7 @@ public struct VideoListView: View {
                         .listSectionSeparator(.hidden, edges: [.top, .bottom])
                     }
                     .listStyle(.plain)
-                    .fullScreenCover(isPresented: $isPresented) {
+                    .sheet(isPresented: $isPresented) {
                         VideoPlayerView()
                     }
                 case .failure:
@@ -86,6 +86,7 @@ private extension VideoListView {
                     .fill(.black)
             }
         }
+        .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
