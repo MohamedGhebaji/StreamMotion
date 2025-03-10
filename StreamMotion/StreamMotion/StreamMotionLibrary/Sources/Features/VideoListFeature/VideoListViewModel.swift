@@ -19,7 +19,7 @@ public class VideoListViewModel: ObservableObject {
     }
     // MARK: - Public Properties
     
-    @Published var state: State = .failure
+    @Published var state: State = .loading
     @Published var canLoadMore = false
     
     // MARK: - Private Properties
