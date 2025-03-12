@@ -12,7 +12,7 @@ public struct SMMinutesAgoUseCase {
 
     // MARK: - Init
     
-    public init(dateClient: DateClient = SMDateClient()) {
+    public init(dateClient: DateClient = DIContainer.shared.dateClient) {
         self.dateClient = dateClient
     }
 }

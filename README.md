@@ -29,6 +29,14 @@ For simplicity, **features are currently interconnected**. However, in a **real-
 
 ---
 
+## 📄 Module Dependencies Graph
+
+Below is a visual representation of **module dependencies**:
+
+![MyLibrary_Dependencies_Graph](https://github.com/user-attachments/assets/afffa63c-b50d-4232-9451-e2f71809ae5f)
+
+---
+
 ## **📌 Features**
 ✅ **Fetch videos from API**  
 ✅ **Infinite scrolling**  

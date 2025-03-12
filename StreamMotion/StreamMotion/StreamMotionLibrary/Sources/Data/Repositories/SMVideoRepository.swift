@@ -12,7 +12,7 @@ public struct SMVideoRepository {
     
     // MARK: - Init
     
-    public init(apiClient: ApiClient = SMApiClient()) {
+    public init(apiClient: ApiClient = DIContainer.shared.apiClient) {
         self.apiClient = apiClient
     }
 }

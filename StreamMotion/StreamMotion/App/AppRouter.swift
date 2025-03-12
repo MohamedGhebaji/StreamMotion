@@ -16,7 +16,7 @@ extension View {
                     VideoPlayerView(
                         viewModel: VideoPlayerViewModel(
                             url: Constants.videoUrl,
-                            playerClient: SMPlayerClient()
+                            playerClient: DIContainer.shared.playerClient
                         )
                     )
             }

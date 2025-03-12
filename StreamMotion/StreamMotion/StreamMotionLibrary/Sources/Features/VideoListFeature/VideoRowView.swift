@@ -17,7 +17,7 @@ struct VideoRowState: Equatable, Identifiable {
 struct VideoRowView: View {
     
     let state: VideoRowState
-    
+    @State private var imageLoaded = false
     var body: some View {
         SMVStack(alignment: .leading, spacing: .medium2) {
             SMHStack(alignment: .top, spacing: .small2) {
@@ -25,6 +25,12 @@ struct VideoRowView: View {
                     image
                         .resizable()
                         .cornerRadius(8)
+                        .opacity(imageLoaded ? 1.0 : 0.0)
+                        .onAppear {
+                            withAnimation(.easeIn(duration: 0.3)) {
+                                imageLoaded = true
+                            }
+                        }
                 } placeholder: {
                     SpinnerView()
                         .frame(width: 30, height: 30)
