@@ -1,9 +1,4 @@
-//
-//  VideoRepository.swift
-//  StreamMotionLibrary
-//
-//  Created by Mohamed Ghebaji on 08/03/2025.
-//
+// Copyright © StreamMotion. All rights reserved.
 
 import Foundation
 

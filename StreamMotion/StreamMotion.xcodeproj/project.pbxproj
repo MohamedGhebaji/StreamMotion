@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA2F01372D81B87C009A0650 /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = EA2F01362D81B87C009A0650 /* Router */; };
+		EA2F01392D81B8DC009A0650 /* VideoPlayerFeature in Frameworks */ = {isa = PBXBuildFile; productRef = EA2F01382D81B8DC009A0650 /* VideoPlayerFeature */; };
+		EA2F014C2D81E422009A0650 /* Utils in Frameworks */ = {isa = PBXBuildFile; productRef = EA2F014B2D81E422009A0650 /* Utils */; };
 		EA6CC67D2D7C8F47008A21DB /* VideoListFeature in Frameworks */ = {isa = PBXBuildFile; productRef = EA6CC67C2D7C8F47008A21DB /* VideoListFeature */; };
 		EA6CC67F2D7C933F008A21DB /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = EA6CC67E2D7C933F008A21DB /* Data */; };
 /* End PBXBuildFile section */
@@ -71,6 +74,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA6CC67F2D7C933F008A21DB /* Data in Frameworks */,
+				EA2F01372D81B87C009A0650 /* Router in Frameworks */,
+				EA2F014C2D81E422009A0650 /* Utils in Frameworks */,
+				EA2F01392D81B8DC009A0650 /* VideoPlayerFeature in Frameworks */,
 				EA6CC67D2D7C8F47008A21DB /* VideoListFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +148,9 @@
 			packageProductDependencies = (
 				EA6CC67C2D7C8F47008A21DB /* VideoListFeature */,
 				EA6CC67E2D7C933F008A21DB /* Data */,
+				EA2F01362D81B87C009A0650 /* Router */,
+				EA2F01382D81B8DC009A0650 /* VideoPlayerFeature */,
+				EA2F014B2D81E422009A0650 /* Utils */,
 			);
 			productName = StreamMotion;
 			productReference = EA6CC5B32D7C4789008A21DB /* StreamMotion.app */;
@@ -418,10 +427,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = StreamMotion/StreamMotion.entitlements;
+				CODE_SIGN_ENTITLEMENTS = StreamMotion/Resources/StreamMotion.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"StreamMotion/Preview Content\"";
 				DEVELOPMENT_TEAM = 5VZ2QR2QTT;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -458,10 +466,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = StreamMotion/StreamMotion.entitlements;
+				CODE_SIGN_ENTITLEMENTS = StreamMotion/Resources/StreamMotion.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"StreamMotion/Preview Content\"";
 				DEVELOPMENT_TEAM = 5VZ2QR2QTT;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -625,6 +632,18 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		EA2F01362D81B87C009A0650 /* Router */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Router;
+		};
+		EA2F01382D81B8DC009A0650 /* VideoPlayerFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VideoPlayerFeature;
+		};
+		EA2F014B2D81E422009A0650 /* Utils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Utils;
+		};
 		EA6CC67C2D7C8F47008A21DB /* VideoListFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = VideoListFeature;

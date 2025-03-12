@@ -1,25 +1,16 @@
-//
-//  VideoListViewModel.swift
-//  StreamMotionLibrary
-//
-//  Created by Mohamed Ghebaji on 08/03/2025.
-//
+// Copyright © StreamMotion. All rights reserved.
 
 import Foundation
 
 import Domain
+import Utils
 
 @MainActor
 public class VideoListViewModel: ObservableObject {
     
-    enum State: Equatable {
-        case loading
-        case success([VideoRowState])
-        case failure
-    }
     // MARK: - Public Properties
     
-    @Published var state: State = .loading
+    @Published var videoListState: ViewState<[VideoRowState]> = .loading
     @Published var canLoadMore = false
     
     // MARK: - Private Properties
@@ -27,7 +18,6 @@ public class VideoListViewModel: ObservableObject {
     var fetchVideosUseCase: FetchVideosUseCase
     private let minutesAgoUseCase: MinutesAgoUseCase
     private var currentPage: Int = 0
-    private var rows = [VideoRowState]()
     
     // MARK: - Init
 
@@ -44,17 +34,22 @@ public class VideoListViewModel: ObservableObject {
                     id: $0.id,
                     thumbnailUrl: $0.thumbnailUrl,
                     title: $0.title,
-                    description: $0.description,
+                    description: $0.description.toAttributedStringFromHTML(),
                     timeAgo: "Il y a \(minutesAgoUseCase.execute(from: $0.creationTime)) minutes"
                 )
             }
-            rows.append(contentsOf: videoRowStates)
-            state = .success(rows)
+            switch videoListState {
+                case .success(var rows):
+                    rows.append(contentsOf: videoRowStates)
+                    videoListState = .success(rows)
+                default:
+                    videoListState = .success(videoRowStates)
+            }
             currentPage = response.page
             canLoadMore = response.hasMore
         } catch {
-            if rows.isEmpty {
-                state = .failure
+            if videoListState == .loading {
+                videoListState = .failure
             }
         }
     }

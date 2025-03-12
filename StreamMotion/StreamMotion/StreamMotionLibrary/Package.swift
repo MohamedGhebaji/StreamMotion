@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -12,8 +12,9 @@ let package = Package(
         .library(name: "VideoListFeature", targets: ["VideoListFeature"]),
         .library(name: "VideoPlayerFeature", targets: ["VideoPlayerFeature"]),
         .library(name: "Utils", targets: ["Utils"]),
-        .library(name: "UI", targets: ["UI"]),
         .library(name: "TestUtils", targets: ["TestUtils"]),
+        .library(name: "Router", targets: ["Router"]),
+        .library(name: "DesignSystem", targets: ["DesignSystem"]),
     ],
     targets: [
         .target(
@@ -45,8 +46,8 @@ let package = Package(
             dependencies: [
                 "Domain",
                 "Utils",
-                "UI",
-                "VideoPlayerFeature"
+                "DesignSystem",
+                "Router"
             ],
             path: "Sources/Features/VideoListFeature"
         ),
@@ -61,18 +62,27 @@ let package = Package(
         ),
         .target(
             name: "VideoPlayerFeature",
-            dependencies: ["Utils"],
+            dependencies: [
+                "Domain",
+                "Utils",
+                "DesignSystem",
+                "Router"
+            ],
             path: "Sources/Features/VideoPlayerFeature"
         ),
         .target(
             name: "Utils"
         ),
         .target(
-            name: "UI"
-        ),
-        .target(
             name: "TestUtils",
             dependencies: ["Domain"]
+        ),
+        .target(name: "Router"),
+        .target(
+            name: "DesignSystem",
+            resources: [
+                .process("Resources/")
+            ]
         ),
     ]
 )

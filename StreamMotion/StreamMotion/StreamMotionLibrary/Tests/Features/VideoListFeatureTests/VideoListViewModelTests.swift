@@ -1,9 +1,4 @@
-//
-//  VideoListViewModelTests.swift
-//  StreamMotionLibrary
-//
-//  Created by Mohamed Ghebaji on 09/03/2025.
-//
+// Copyright © StreamMotion. All rights reserved.
 
 import XCTest
 
@@ -32,10 +27,10 @@ final class VideoListViewModelTests: XCTestCase {
         
         // THEN
         let expectations: [VideoRowState] = [
-            .init(id: "1", thumbnailUrl: "https://test.com/image.jpg", title: "Test Video", description: "Test Description", timeAgo: "Il y a 5 minutes"),
-            .init(id: "2", thumbnailUrl: "https://test.com/image2.jpg", title: "Second Video", description: "Another Description", timeAgo: "Il y a 5 minutes")
+            .init(id: "1", thumbnailUrl: "https://test.com/image.jpg", title: "Test Video", description: "Test Description".toAttributedStringFromHTML(), timeAgo: "Il y a 5 minutes"),
+            .init(id: "2", thumbnailUrl: "https://test.com/image2.jpg", title: "Second Video", description: "Another Description".toAttributedStringFromHTML(), timeAgo: "Il y a 5 minutes")
         ]
-        XCTAssertEqual(viewModel.state, .success(expectations))
+        XCTAssertEqual(viewModel.videoListState, .success(expectations))
         XCTAssertTrue(viewModel.canLoadMore)
     }
     
@@ -50,7 +45,7 @@ final class VideoListViewModelTests: XCTestCase {
         await viewModel.fetchVideos()
         
         // THEN
-        XCTAssertEqual(viewModel.state, .failure)
+        XCTAssertEqual(viewModel.videoListState, .failure)
         XCTAssertFalse(viewModel.canLoadMore)
     }
     
@@ -72,10 +67,10 @@ final class VideoListViewModelTests: XCTestCase {
         
         // WHEN
         let expectationsPage1: [VideoRowState] = [
-            .init(id: "1", thumbnailUrl: "https://test.com/image.jpg", title: "Video 1", description: "Desc 1", timeAgo: "Il y a 5 minutes")
+            .init(id: "1", thumbnailUrl: "https://test.com/image.jpg", title: "Video 1", description: "Desc 1".toAttributedStringFromHTML(), timeAgo: "Il y a 5 minutes")
         ]
         await viewModel.fetchVideos()
-        XCTAssertEqual(viewModel.state, .success(expectationsPage1))
+        XCTAssertEqual(viewModel.videoListState, .success(expectationsPage1))
         XCTAssertTrue(viewModel.canLoadMore)
         
         // WHEN
@@ -84,10 +79,10 @@ final class VideoListViewModelTests: XCTestCase {
         
         // THEN
         let expectationsPage2: [VideoRowState] = [
-            .init(id: "1", thumbnailUrl: "https://test.com/image.jpg", title: "Video 1", description: "Desc 1", timeAgo: "Il y a 5 minutes"),
-            .init(id: "2", thumbnailUrl: "https://test.com/image2.jpg", title: "Video 2", description: "Desc 2", timeAgo: "Il y a 5 minutes"),
+            .init(id: "1", thumbnailUrl: "https://test.com/image.jpg", title: "Video 1", description: "Desc 1".toAttributedStringFromHTML(), timeAgo: "Il y a 5 minutes"),
+            .init(id: "2", thumbnailUrl: "https://test.com/image2.jpg", title: "Video 2", description: "Desc 2".toAttributedStringFromHTML(), timeAgo: "Il y a 5 minutes"),
         ]
-        XCTAssertEqual(viewModel.state, .success(expectationsPage2))
+        XCTAssertEqual(viewModel.videoListState, .success(expectationsPage2))
         XCTAssertFalse(viewModel.canLoadMore)
     }
     
@@ -103,7 +98,7 @@ final class VideoListViewModelTests: XCTestCase {
         await viewModel.loadNextPage()
         
         // THEN
-        XCTAssertEqual(viewModel.state, .failure)
+        XCTAssertEqual(viewModel.videoListState, .failure)
         XCTAssertTrue(viewModel.canLoadMore)
     }
 }

@@ -1,28 +1,24 @@
-//
-//  VideoListView.swift
-//  StreamMotionLibrary
-//
-//  Created by Mohamed Ghebaji on 08/03/2025.
-//
+// Copyright © StreamMotion. All rights reserved.
 
 import SwiftUI
 
 import Utils
-import UI
-import VideoPlayerFeature
+import DesignSystem
+import Router
 
 public struct VideoListView: View {
     
-    @ObservedObject private var viewModel: VideoListViewModel
+    @StateObject private var viewModel: VideoListViewModel
     @State private var isPresented = false
-    
+    @EnvironmentObject private var routeurPath: RouterPath
+
     public init(viewModel: VideoListViewModel) {
-        self.viewModel = viewModel
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
         Group {
-            switch viewModel.state {
+            switch viewModel.videoListState {
                 case .loading:
                     SpinnerView()
                         .frame(width: 40, height: 40)
@@ -30,10 +26,12 @@ public struct VideoListView: View {
                     List {
                         Group {
                             ForEach(rows) { row in
-                                VideoRowView(state: row)
-                                    .onTapGesture {
-                                        isPresented.toggle()
-                                    }
+                                Button {
+                                    routeurPath.presentedSheet = .player
+                                } label: {
+                                    VideoRowView(state: row)
+                                }
+                                .buttonStyle(PressedEffectButtonStyle())
                             }
                             
                             if viewModel.canLoadMore {
@@ -48,9 +46,6 @@ public struct VideoListView: View {
                         .listSectionSeparator(.hidden, edges: [.top, .bottom])
                     }
                     .listStyle(.plain)
-                    .sheet(isPresented: $isPresented) {
-                        VideoPlayerView()
-                    }
                 case .failure:
                     failureView
             }

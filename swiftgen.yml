@@ -1,0 +1,16 @@
+fonts:
+  inputs: StreamMotion/StreamMotion/StreamMotionLibrary/Sources/DesignSystem/Resources/Fonts
+  outputs:
+    templateName: swift5
+    output: StreamMotion/StreamMotion/StreamMotionLibrary/Sources/DesignSystem/Generated/Fonts.swift
+
+xcassets:
+  - inputs:
+    - StreamMotion/StreamMotion/StreamMotionLibrary/Sources/DesignSystem/Resources/Icons.xcassets
+    - StreamMotion/StreamMotion/StreamMotionLibrary/Sources/DesignSystem/Resources/Colors.xcassets
+    outputs:
+      templateName: swift5
+      output: StreamMotion/StreamMotion/StreamMotionLibrary/Sources/DesignSystem/Generated/Assets.swift
+      params:
+        enumName: AppAsset
+        publicAccess: true

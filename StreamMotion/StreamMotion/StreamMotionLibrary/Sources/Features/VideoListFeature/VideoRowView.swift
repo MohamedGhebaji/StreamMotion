@@ -1,21 +1,16 @@
-//
-//  VideoRowView.swift
-//  StreamMotionLibrary
-//
-//  Created by Mohamed Ghebaji on 08/03/2025.
-//
+// Copyright © StreamMotion. All rights reserved.
 
 import SwiftUI
 
 import Domain
-import UI
+import DesignSystem
 
 struct VideoRowState: Equatable, Identifiable {
     
     let id: String
     let thumbnailUrl: String
     let title: String
-    let description: String
+    let description: AttributedString?
     let timeAgo: String
 }
 
@@ -24,25 +19,24 @@ struct VideoRowView: View {
     let state: VideoRowState
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack(alignment: .top) {
+        SMVStack(alignment: .leading, spacing: .medium2) {
+            SMHStack(alignment: .top, spacing: .small2) {
                 AsyncImage(url: URL(string: state.thumbnailUrl)) { image in
-                    image.resizable()
+                    image
+                        .resizable()
+                        .cornerRadius(8)
                 } placeholder: {
                     SpinnerView()
                         .frame(width: 30, height: 30)
                 }
                 .frame(width: 120, height: 60)
                 
-                Text(state.title)
-                    .font(.headline)
+                SMText(state.title, style: .titleSmall, color: AppAsset.Colors.appBlack.swiftUIColor)
             }
-            
-            Text(state.description)
-                .font(.subheadline)
-            
-            Text(state.timeAgo)
-                .font(.caption)
+            if let description = state.description {
+                SMText(description, style: .buttonMedium, color: AppAsset.Colors.appBlack.swiftUIColor)
+            }
+            SMText(state.timeAgo, style: .textSmall, color: AppAsset.Colors.appBlack.swiftUIColor)
         }
         .padding()
     }

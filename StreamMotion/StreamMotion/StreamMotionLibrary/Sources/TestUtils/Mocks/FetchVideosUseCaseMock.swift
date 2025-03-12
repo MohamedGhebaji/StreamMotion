@@ -1,9 +1,4 @@
-//
-//  FetchVideosUseCaseMock.swift
-//  StreamMotionLibrary
-//
-//  Created by Mohamed Ghebaji on 09/03/2025.
-//
+// Copyright © StreamMotion. All rights reserved.
 
 import Foundation
 

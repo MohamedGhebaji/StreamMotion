@@ -1,17 +1,20 @@
-//
-//  StreamMotionApp.swift
-//  StreamMotion
-//
-//  Created by Mohamed Ghebaji on 08/03/2025.
-//
+// Copyright © StreamMotion. All rights reserved.
 
 import SwiftUI
 
 import Data
 import VideoListFeature
+import Router
 
 @main
 struct StreamMotionApp: App {
+    
+    // MARK: - Properties
+    
+    @ObservedObject private var routeurPath = RouterPath()
+
+    // MARK: - Body
+
     var body: some Scene {
         WindowGroup {
             NavigationView {
@@ -21,6 +24,8 @@ struct StreamMotionApp: App {
                         minutesAgoUseCase: SMMinutesAgoUseCase()
                     )
                 )
+                .withSheetDestinations(sheetDestinations: $routeurPath.presentedSheet)
+                .environmentObject(routeurPath)
             }
         }
     }

@@ -1,16 +1,11 @@
-//
-//  SMApiClient.swift
-//  StreamMotionLibrary
-//
-//  Created by Mohamed Ghebaji on 08/03/2025.
-//
+// Copyright © StreamMotion. All rights reserved.
 
 import Foundation
 
 import Domain
 import Utils
 
-public struct SMApiClient: ApiClient {
+public struct SMApiClient {
     
     // MARK: - Properties
 
@@ -20,8 +15,11 @@ public struct SMApiClient: ApiClient {
     // MARK: - Init
 
     public init() {}
-    
-    // MARK: - ApiClient
+}
+
+// MARK: - ApiClient
+
+extension SMApiClient: ApiClient {
     
     public func fetch<T>(route: Route, as: T.Type) async throws -> T where T : Decodable {
         guard let url = URL(string: Constants.baseUrl + route.path) else {
@@ -34,4 +32,5 @@ public struct SMApiClient: ApiClient {
         let (data, _) = try await session.data(for: request)
         return try decoder.decode(T.self, from: data)
     }
+
 }
