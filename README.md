@@ -33,7 +33,8 @@ For simplicity, **features are currently interconnected**. However, in a **real-
 
 Below is a visual representation of **module dependencies**:
 
-![MyLibrary_Dependencies_Graph](https://github.com/user-attachments/assets/afffa63c-b50d-4232-9451-e2f71809ae5f)
+![Layered Dependency Diagram of StreamMotionLibrary](https://github.com/user-attachments/assets/9a14d69a-49fa-48f0-aedb-b4c42a3db919)
+
 
 ---
 
@@ -52,3 +53,23 @@ This project includes **unit tests** to ensure reliability.
 ✅ **Model Parsing Test** → Ensures API response is correctly mapped.  
 ✅ **Use Case Tests** → Verifies fetching videos and handling API failures.  
 ✅ **ViewModel Tests** → Checks state updates, pagination, and error handling.
+
+---
+
+## 🔥 Areas for Improvement
+
+To enhance this project, the following improvements should be made:
+
+### **1️⃣ Use `SwiftyMocky` + `Sourcery` to Generate Mocks**
+- Currently, mocks are written manually, which is **time-consuming** and **error-prone**.
+- **Solution:** Use [**SwiftyMocky**](https://github.com/MakeAWishFoundation/SwiftyMocky) + [**Sourcery**](https://github.com/krzysztofzablocki/Sourcery) to automatically generate **protocol-based mocks**.
+
+### **2️⃣ Use a Solid Dependency Injection Library**
+- Instead of manually injecting dependencies
+- **Solution:** Use [**Swift Dependencies**](https://github.com/pointfreeco/swift-dependencies) and inject dependencies using the `@Dependency` **property wrapper**.
+
+### **3️⃣ Generate Mocks for Models**
+- **Issue:** Currently, models are static, making testing **less flexible**.
+- **Solution:** Generate **mock models** to improve **unit testing and UI previews**.
+
+By implementing these improvements, the project will become **more scalable, maintainable, and testable**.
