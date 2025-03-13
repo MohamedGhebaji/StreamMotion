@@ -27,4 +27,8 @@ extension SMPlayerClient: PlayerClient {
         player.replaceCurrentItem(with: item)
         player.play()
     }
+    
+    public func stop() {
+        player.pause()
+    }
 }

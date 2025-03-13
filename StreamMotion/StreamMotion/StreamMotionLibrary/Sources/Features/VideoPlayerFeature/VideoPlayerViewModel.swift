@@ -28,4 +28,8 @@ public class VideoPlayerViewModel: ObservableObject {
     func play() {
         playerClient.play(url: url)
     }
+    
+    func stop() {
+        playerClient.stop()
+    }
 }

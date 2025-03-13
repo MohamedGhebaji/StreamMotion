@@ -31,5 +31,8 @@ public struct VideoPlayerView: View {
             .task {
                 viewModel.play()
             }
+            .onDisappear {
+                viewModel.stop()
+            }
     }
 }

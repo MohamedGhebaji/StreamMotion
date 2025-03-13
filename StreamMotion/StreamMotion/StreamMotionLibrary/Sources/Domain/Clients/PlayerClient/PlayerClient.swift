@@ -8,4 +8,5 @@ public protocol PlayerClient {
     
     func getPlayer() -> AVPlayer
     func play(url: URL)
+    func stop()
 }
